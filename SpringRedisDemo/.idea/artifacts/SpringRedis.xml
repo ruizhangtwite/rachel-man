@@ -1,6 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="exploded-war" name="SpringRedis">
-    <output-path>$PROJECT_DIR$/src/main/webapp</output-path>
-    <root id="root" />
-  </artifact>
-</component>
