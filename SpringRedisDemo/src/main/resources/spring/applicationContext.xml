@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- 把标记了@Controller注解的类转换为bean -->
+    <context:component-scan base-package="com.zhangrui"/>
+
+    <!--通知spring使用cglib而不是jdk的来生成代理方法 AOP可以拦截到Controller -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+
+    <!-- Cookie -->
+    <bean class="org.springframework.web.servlet.i18n.CookieLocaleResolver" id="localeResolver"/>
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+    <!-- 支持返回json(避免IE在ajax请求时，返回json出现下载 ) -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <!-- 请求日期格式转换 -->
+        <property name="webBindingInitializer">
+            <bean class="com.zhangrui.platform.inteceptor.DateBindingInitializer" />
+        </property>
+        <property name="messageConverters">
+            <list>
+                <ref bean="mappingJackson2HttpMessageConverter"/> <!-- 处理json-->
+            </list>
+        </property>
+       <!-- <property name="customArgumentResolvers">
+            <list>
+                <bean class="com.zhangrui.framework.interceptor.transcoding.BeanArgumentResolver"></bean>
+                <bean class="com.zhangrui.framework.interceptor.transcoding.ListArgumentResolver"></bean>
+            </list>
+        </property>-->
+    </bean>
+    <!-- 处理json-->
+    <bean id="mappingJackson2HttpMessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="objectMapper">
+            <bean class="com.fasterxml.jackson.databind.ObjectMapper">
+                <property name="dateFormat">
+                    <bean class="java.text.SimpleDateFormat">
+                        <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" />
+                    </bean>
+                </property>
+            </bean>
+        </property>
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/plain;charset=UTF-8</value>
+                <value>application/json;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 对模型视图添加前后缀
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix="/"
+          p:suffix=".jsp"/> -->
+
+    <!-- 配置springMVC处理上传文件的信息 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="maxUploadSize" value="10485760000"/>
+        <property name="maxInMemorySize" value="40960"/>
+    </bean>
+
+    <!-- ApplicationContext对象获取 -->
+    <bean id="mvcContextAware" class="com.zhangrui.platform.context.SpringMvcAware"/>
+
+    <!-- ServletContext对象获取-->
+    <bean id="servletContextAware" class="com.zhangrui.platform.context.SpringServletAware"/>
+
+</beans>
