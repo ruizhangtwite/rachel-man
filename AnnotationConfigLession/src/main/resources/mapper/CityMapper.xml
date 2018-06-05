@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhangrui.annotation.mapper.CityMapper">
+
+    <resultMap id="cityMap" type="city">
+        <id column="ID" property="id"></id>
+        <result column="Name" property="name"></result>
+        <result column="CountryCode" property="counntryCode"></result>
+        <result column="District" property="district"></result>
+        <result column="Population" property="population"></result>
+    </resultMap>
+
+    <select id="getAllCity" resultMap="cityMap">
+        SELECT * from city limit 0,20
+    </select>
+
+</mapper>
