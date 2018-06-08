@@ -46,7 +46,6 @@ public class AppConfig {
 
 
 
-
     @Bean
     public PlatformTransactionManager initPlatformTransactionManager(){
         PlatformTransactionManager manager = new DataSourceTransactionManager(initDruidDataSource());

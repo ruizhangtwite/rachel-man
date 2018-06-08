@@ -1,6 +1,8 @@
 package com.zhangrui.annotation.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zhangrui.annotation.config.configadapter.RequestBeanMethodArgumentResolver;
+import com.zhangrui.annotation.config.configadapter.RequestListMethodArgumentResolver;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -10,6 +12,7 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
@@ -59,8 +62,6 @@ public class DispatcherConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-
-
     }
 
     @Override
@@ -77,5 +78,14 @@ public class DispatcherConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("/static/");
+    }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        RequestListMethodArgumentResolver requestListResolver = new RequestListMethodArgumentResolver();
+        argumentResolvers.add(requestListResolver);
+
+        RequestBeanMethodArgumentResolver beanArgumentResolver = new RequestBeanMethodArgumentResolver();
+        argumentResolvers.add(beanArgumentResolver);
     }
 }
