@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+           targetNamespace="http://com.zhangrui/webservices" xmlns="http://com.zhangrui/webservices">
+
+    
+    <xs:complexType name="Human">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" minOccurs="1" maxOccurs="1"></xs:element>
+            <xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+            <xs:element name="gender">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="male"></xs:enumeration>
+                        <xs:enumeration value="female"></xs:enumeration>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            
+            <xs:element name="age" type="xs:int"></xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:element name="HumanRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="xs:long" name="userId"></xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="HumanResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="xs:boolean" name="status" minOccurs="1" maxOccurs="1"></xs:element>
+                <xs:element name="human" type="Human"></xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+</xs:schema>
