@@ -215,6 +215,14 @@
     <build>
         <finalName>spring-redis-demo</finalName>
         <resources>
+			<resource>
+				<directory>src/main/java</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
+                </includes>
+			</resource>
             <resource>
                 <targetPath>${project.build.directory}/classes</targetPath>
                 <directory>src/main/resources</directory>
