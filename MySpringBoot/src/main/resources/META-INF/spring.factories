@@ -1,0 +1,3 @@
+##配置Spring Boot的环境信息
+org.springframework.context.ApplicationListener=\
+com.zhangrui.demo.context.CustomEnvironmentApplicationListener
