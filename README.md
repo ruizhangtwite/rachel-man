@@ -8,7 +8,7 @@
 
 ## 仓库项目内容简介
 
-分别用于对仓库中的不同项目涉及的技术点进行说明
+分别用于对仓库中的不同项目涉及点进行说明
 
 --------
 - **[Spring+SpingMVC+Mybatis全注解案例](https://github.com/ruizhangtwite/RachelMan/tree/master/AnnotationConfigLession)**
