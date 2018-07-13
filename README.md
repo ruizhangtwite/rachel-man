@@ -23,5 +23,9 @@ Spring+Redis xml配置化
 WebService规范；注解实现WebService的配置
 - **[数据库连接池](https://github.com/ruizhangtwite/RachelMan/tree/master/ThreadPoolUtil)**
 WebService规范；模仿MyBatis，借助BlockingQueue，自实现数据库连接池
-- **[Tomcat原理自实现](https://github.com/ruizhangtwite/rachel_man/tree/master/TomcatSimpleAnalysis)**
+- **[Tomcat原理自实现](https://github.com/ruizhangtwite/rachel-man/tree/master/TomcatSimpleAnalysis)**
 模拟Tomcat加载Servlet；Connector处理IO请求
+- **[国际化的不同实现](https://github.com/ruizhangtwite/rachel-man/tree/master/ResourceBundleDemo)**
+Properties、ResourceBundle、ResourceBundleControlProvider（JDK1.8）实现国际化
+- **[字符串匹配实现（面试）](https://github.com/ruizhangtwite/rachel-man/tree/master/CustomRegexStrMatch)**
+用于判断字符串是否匹配含有“.”或者“*”的正则式
