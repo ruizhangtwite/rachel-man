@@ -44,7 +44,7 @@ public class DistributeImproveLock implements Lock {
     public void lock() {
         if (!tryLock()){
             waitForLock();
-            //this.lock();    //这行加上会出现问题
+            this.lock();    //这行加上会出现问题
         }
 
         System.out.println(Thread.currentThread().getName() +  "获得了锁");
@@ -57,8 +57,9 @@ public class DistributeImproveLock implements Lock {
             if (lockName.contains(splitStr)) {
                 throw new Exception("your lockName includes + \'" + splitStr + "\'" );
             }
-
-            CURRENT_NODE.set(this.zkClient.createEphemeralSequential(ROOT_LOCK + lockName + splitStr, new byte[0]));
+			if (CURRENT_NODE.get() == null)
+				CURRENT_NODE.set(this.zkClient.createEphemeralSequential(ROOT_LOCK + lockName + splitStr, new byte[0]));
+			}
             // 取出所有lockName的锁，getChildren()方法获取的路径不以ROOT_LOCK开头，只有ROOT_LOCK后面的部分
             List<String> children = this.zkClient.getChildren(ROOT_LOCK);
             List<String> nodeLists = new ArrayList<>();
