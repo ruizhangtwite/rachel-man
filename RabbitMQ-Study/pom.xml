@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.zhangrui</groupId>
+    <artifactId>RabbitMQ-demo</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.framework.version>3.0.5.RELEASE</spring.framework.version>
+        <plugin.version>2.5</plugin.version>
+    </properties>
+
+    <distributionManagement>
+        <!-- 两个ID必须与 setting.xml中的<server><id>nexus-releases</id></server>保持一致-->
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://localhost:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <version>3.5.1</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- 插件使用练习 -->
+            <!-- 清理插件的使用，maven3.0.4会默认使用2.4.1版本的clean插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>${plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>auto-clean</id>
+                        <!-- clean生命周期clean阶段 -->
+                        <phase>clean</phase>
+                        <goals>
+                            <!-- 执行clean插件的clean目标 -->
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- maven-resources-plugin在maven3.0.4中默认使用2.5版本的resources -->
+
+            <!-- 编译插件的使用，maven3.0.4会默认使用2.3.2版本的compile插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${plugin.version}</version>
+                <configuration>
+                    <!-- 源代码使用的jdk版本 -->
+                    <source>1.7</source>
+                    <!-- 构建后生成class文件jdk版本 -->
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+
+            <!-- maven-surefire-plugin插件，maven3.0.4默认使用2.10版本的surefire插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${plugin.version}</version>
+                <configuration>
+                    <!-- 改变测试报告生成目录 ，默认为target/surefire-reports-->
+                    <!-- project.build.directory表示maven的属性，这里指的是构建的目录下面test-reports，project.build.directory就是pom标签的值 -->
+                    <reportsDirectory>${project.build.directory}/test-reports</reportsDirectory>
+                </configuration>
+            </plugin>
+
+            <!-- 部署插件的使用，maven3.0.4会默认使用2.7版本的deploy插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${plugin.version}</version>
+                <configuration>
+                    <!-- 更新元数据 -->
+                    <updateReleaseInfo>true</updateReleaseInfo>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+
+</project>
