@@ -1,6 +1,6 @@
 ### 欢迎阅读
 
-@(个人学习)[Spring FrameWork|Spring Boot| Redis]
+@(个人学习)[Java|Spring FrameWork|Spring Boot| Redis]
 
 本仓库主要是为了**个人学习所用**，是个人开发过程中的杂记，一些技术的积累，结合个人笔记，以备个人后期查阅！
  ----------
