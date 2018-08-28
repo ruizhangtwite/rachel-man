@@ -7,6 +7,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Desp:自定义线程池
+ * 原理：在线程池内部有一个线程（工作线程池）不断地运行加入到队列中的待处理模块，工作线程池不断地从队列中取模块进行处理；
  * 2018-08-28 21:28
  * Created by zhangrui.
  */
