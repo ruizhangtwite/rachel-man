@@ -35,6 +35,8 @@ RabbitMQ的熟悉
 Springboot + Mongodb小案例
 - **[Java + RPC原理模拟实现](https://github.com/ruizhangtwite/rachel-man/tree/master/GrpcPrinciple)**
 Java + RPC原理的模拟实现
+- **[GRPC](https://github.com/ruizhangtwite/rachel-man/tree/master/Grpc)**
+GRPC使用小案例（适应不同语言）
 - **[NIO小案例](https://github.com/ruizhangtwite/rachel-man/tree/master/NIO-Sample)**
 NIO小案例
 - **[线程池原理自实现](https://github.com/ruizhangtwite/rachel-man/tree/master/ThreadPoolPrinciple)**
