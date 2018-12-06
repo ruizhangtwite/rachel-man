@@ -41,3 +41,5 @@ GRPC使用小案例（适应不同语言）
 NIO小案例
 - **[线程池原理自实现](https://github.com/ruizhangtwite/rachel-man/tree/master/ThreadPoolPrinciple)**
 线程池原理自实现
+- **[JDK源码演练](https://github.com/ruizhangtwite/rachel-man/tree/master/core-show) **
+JDK源码示例
