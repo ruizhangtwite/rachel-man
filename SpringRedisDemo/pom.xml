@@ -156,6 +156,12 @@
         </dependency>
         <!-- spring mvc related.....end -->
 
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
         <!-- mybatis orm related.....start -->
         <dependency>
             <groupId>org.springframework</groupId>

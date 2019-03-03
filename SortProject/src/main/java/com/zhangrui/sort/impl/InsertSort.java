@@ -8,6 +8,7 @@ import java.util.stream.Stream;
  * Desp: 插入排序
  * 2019-03-02 17:38
  * Created by zhangrui.
+ * 空间换时间，时间复杂度高，适合小内存的场景
  */
 public class InsertSort<T extends Comparable<T>> implements Sort<T> {
 
@@ -18,7 +19,7 @@ public class InsertSort<T extends Comparable<T>> implements Sort<T> {
         /**
          * 插入排序的思想：
          * 前面的数与后面的数进行比较，如果比前面的小，就插入到其中；
-         * 因此，必然是从第一个开始，i = 1
+         * 因此，必然是从第二个数开始，i = 1
          */
         for (int i = 1; i < size; i++){
             for (int j = 0; j < i; j++){

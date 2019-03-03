@@ -46,7 +46,7 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="F:\Projects\SpringRedisDemo\target/MANIFEST.MF" />
+        <element id="file-copy" path="E:\GitProjects\RachelMan\SpringRedisDemo\target/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="spring-redis/web/Web" />
     </root>
