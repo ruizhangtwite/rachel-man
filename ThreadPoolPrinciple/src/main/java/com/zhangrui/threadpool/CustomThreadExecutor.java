@@ -45,10 +45,11 @@ public class CustomThreadExecutor {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         CustomThreadExecutor executor = new CustomThreadExecutor(80, 5);
         for (int i = 0; i < 60; i++) {
             executor.execute(() -> {
+				Threa.sleep(1000)
                 System.out.println(Thread.currentThread().getName() + "开始执行了");
             });
         }
@@ -73,7 +74,14 @@ public class CustomThreadExecutor {
             if (this.blockingQueue != null) {
                 while (CustomThreadExecutor.this.working || this.blockingQueue.size() > 0) {
                     try {
-                        Runnable runnable = blockingQueue.poll();
+                       
+						if (this.exector.isRunning) {
+							runnable = this.blockingQueue.take();
+
+						} else {
+							runnable = this.blockingQueue.poll(300, TimeUnit.MILLISECONDS);
+						}
+                
                         if (runnable != null){
                             runnable.run();
                         }
