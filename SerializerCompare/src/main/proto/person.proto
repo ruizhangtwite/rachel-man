@@ -1,0 +1,11 @@
+syntax = "proto2";
+
+package tutorial;
+
+option java_package = "com.zhangrui.serializer.protobuf";
+option java_outer_classname = "PersonMan";
+
+message Person {
+    optional int32 id = 1;
+    optional string name = 2;
+}
