@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Desp:自定义线程池
@@ -24,21 +25,23 @@ public class CustomThreadExecutor {
         workers = new ArrayList<>(workSize);
 
         for (int i = 0; i < workSize; i++) {
-            Worker worker = new Worker(blockingQueue);
+            Worker worker = new Worker(this);
             workers.add(worker);
             worker.start();
         }
     }
 
     public void execute(Runnable runnable) {
-        blockingQueue.offer(runnable);
+        if (this.working) {
+            blockingQueue.offer(runnable);
+        }
     }
 
     public void shutdown() {
         working = false;
-        for (int i = 0; i < workers.size(); i++){
+        for (int i = 0; i < workers.size(); i++) {
             if (workers.get(i).getState().equals(Thread.State.BLOCKED) || workers.get(i).getState().equals(Thread.State.WAITING)
-            || workers.get(i).getState().equals(Thread.State.TIMED_WAITING)){
+                    || workers.get(i).getState().equals(Thread.State.TIMED_WAITING)) {
                 workers.get(i).interrupt();
             }
         }
@@ -49,7 +52,11 @@ public class CustomThreadExecutor {
         CustomThreadExecutor executor = new CustomThreadExecutor(80, 5);
         for (int i = 0; i < 60; i++) {
             executor.execute(() -> {
-				Threa.sleep(1000)
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 System.out.println(Thread.currentThread().getName() + "开始执行了");
             });
         }
@@ -63,26 +70,27 @@ public class CustomThreadExecutor {
      */
     class Worker extends Thread {
 
-        private BlockingQueue<Runnable> blockingQueue;
+        private CustomThreadExecutor exector;
 
-        public Worker(BlockingQueue<Runnable> blockingQueue) {
-            this.blockingQueue = blockingQueue;
+        public Worker(CustomThreadExecutor exector) {
+            this.exector = exector;
         }
 
         @Override
         public void run() {
-            if (this.blockingQueue != null) {
-                while (CustomThreadExecutor.this.working || this.blockingQueue.size() > 0) {
+            Runnable runnable = null;
+            if (this.exector.blockingQueue != null) {
+                while (CustomThreadExecutor.this.working || this.exector.blockingQueue.size() > 0) {
                     try {
-                       
-						if (this.exector.isRunning) {
-							runnable = this.blockingQueue.take();
 
-						} else {
-							runnable = this.blockingQueue.poll(300, TimeUnit.MILLISECONDS);
-						}
-                
-                        if (runnable != null){
+                        if (this.exector.working) {
+                            runnable = this.exector.blockingQueue.take();
+
+                        } else {
+                            runnable = this.exector.blockingQueue.poll(300, TimeUnit.MILLISECONDS);
+                        }
+
+                        if (runnable != null) {
                             runnable.run();
                         }
                     } catch (Exception e) {
