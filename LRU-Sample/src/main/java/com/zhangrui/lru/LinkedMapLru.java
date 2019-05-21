@@ -14,7 +14,7 @@ public class LinkedMapLru<T> {
     private float loadFactor = 0.75f;
 
     public LinkedMapLru(final int size) {
-        this.linkedHashMap = new LinkedHashMap<String,T>(Math.round(size / loadFactor) + 1, loadFactor, true){
+        this.linkedHashMap = new LinkedHashMap<String,T>((int)Math.ceil(size / loadFactor) + 1, loadFactor, true){
             @Override
             protected boolean removeEldestEntry(Map.Entry<String, T> eldest) {
                 return this.size() > size;

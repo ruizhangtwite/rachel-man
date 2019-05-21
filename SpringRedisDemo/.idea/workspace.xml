@@ -47,7 +47,7 @@
       <file leaf-file-name="Selector.java" pinned="false" current-in-tab="true">
         <entry file="jar://D:/Java/ENV8/JDK/src.zip!/java/nio/channels/Selector.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.21978022" vertical-offset="4340" max-vertical-offset="7926">
+            <state vertical-scroll-proportion="0.43956044" vertical-offset="4220" max-vertical-offset="7926">
               <caret line="249" column="18" selection-start-line="249" selection-start-column="18" selection-end-line="249" selection-end-column="18" />
               <folding />
             </state>
@@ -192,7 +192,7 @@
     <property name="LayoutCode.rearrangeEntriesJava" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../SortProject" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../LRU-Sample" />
     <property name="dynamic.classpath" value="false" />
     <property name="SearchEverywhereHistoryKey" value="pool&#9;FILE&#9;jar://D:/Work/maven/respon/redis/clients/jedis/2.7.3/jedis-2.7.3.jar!/redis/clients/jedis/JedisPool.class&#10;jedispool&#9;PSI&#9;JAVA://redis.clients.jedis.JedisPool&#10;jedisconfi&#9;PSI&#9;JAVA://redis.clients.jedis.JedisPoolConfig&#10;jedis&#9;PSI&#9;JAVA://redis.clients.jedis.Jedis&#10;proceedingj&#9;PSI&#9;JAVA://org.aspectj.lang.ProceedingJoinPoint&#10;proceedjo&#9;PSI&#9;JAVA://org.aspectj.lang.ProceedingJoinPoint&#10;joinp&#9;PSI&#9;JAVA://org.aspectj.lang.JoinPoint&#10;KeyGenerator &#9;PSI&#9;JAVA://org.springframework.cache.interceptor.KeyGenerator&#10;CachingConfigurerSupport &#9;PSI&#9;JAVA://org.springframework.cache.annotation.CachingConfigurerSupport" />
     <property name="options.lastSelected" value="preferences.lookFeel" />
@@ -650,12 +650,12 @@
       <workItem from="1556284984612" duration="3739000" />
       <workItem from="1556326658280" duration="1387000" />
       <workItem from="1556455546600" duration="2178000" />
-      <workItem from="1556460845725" duration="705000" />
+      <workItem from="1556460845725" duration="712000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="74106000" />
+    <option name="totallyTimeSpent" value="74113000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -678,7 +678,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="1" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
@@ -1127,7 +1127,7 @@
     </entry>
     <entry file="jar://D:/Java/ENV8/JDK/src.zip!/java/nio/channels/Selector.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21978022" vertical-offset="4340" max-vertical-offset="7926">
+        <state vertical-scroll-proportion="0.43956044" vertical-offset="4220" max-vertical-offset="7926">
           <caret line="249" column="18" selection-start-line="249" selection-start-column="18" selection-end-line="249" selection-end-column="18" />
           <folding />
         </state>

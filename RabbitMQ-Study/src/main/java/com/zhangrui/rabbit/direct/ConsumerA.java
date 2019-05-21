@@ -13,14 +13,14 @@ public class ConsumerA {
 
     private final static String QUEUE_NAME = "rabbitMQ";
 
-    private final static String[] routeKeys = {"warn", "info"};
+    private final static String[] routeKeys = {"error","warn", "info"};
 
     public static void main(String[] args) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         Connection connection = factory.newConnection();
 
-        Channel channel = connection.createChannel();
+        final Channel channel = connection.createChannel();
         channel.exchangeDeclare("my-exchange-1", "direct");
 
 
@@ -30,6 +30,7 @@ public class ConsumerA {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 System.out.println(new String(body));
+                channel.basicAck(envelope.getDeliveryTag(), true);
             }
         };
 
@@ -37,11 +38,11 @@ public class ConsumerA {
         for (String routeKey : routeKeys) {
             channel.queueDeclare(routeKey + "-" + QUEUE_NAME, false, false, false, null);
             channel.queueBind(routeKey + "-" + QUEUE_NAME, "my-exchange-1", routeKey);
-            channel.basicConsume(routeKey + "-" + QUEUE_NAME, true, consumer);
+            channel.basicConsume(routeKey + "-" + QUEUE_NAME, false, consumer);
         }
 
 
-
+        
 
     }
 }
