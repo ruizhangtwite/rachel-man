@@ -1,9 +1,11 @@
 package com.zhangrui.nio;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.*;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -21,7 +23,7 @@ public class NIOServer {
         this.port = port;
     }
 
-    public void connect(){
+    public void connect() {
 
         try {
             selector = Selector.open();
@@ -35,26 +37,29 @@ public class NIOServer {
         }
     }
 
-    public void listen(){
-        while (true){
+    public void listen() {
+        while (true) {
             try {
-                selector.select();
+                int i = selector.select();
+                if (i <= 0) {
+                    continue;
+                }
                 Set<SelectionKey> selectedKeys = selector.selectedKeys();
                 Iterator<SelectionKey> iterator = selectedKeys.iterator();
-                while (iterator.hasNext()){
+                while (iterator.hasNext()) {
                     SelectionKey key = iterator.next();
                     iterator.remove();
-                    if (key.isAcceptable()){
+                    if (key.isAcceptable()) {
                         ServerSocketChannel channel = (ServerSocketChannel) key.channel();
                         SocketChannel accept = channel.accept();
                         accept.configureBlocking(false);
                         ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
                         byteBuffer.put("我是张瑞".getBytes());
-                        byteBuffer.flip();
+                        //byteBuffer.flip();
                         accept.write(byteBuffer);
-                        byteBuffer.clear();
+                        //byteBuffer.clear();
                         accept.register(selector, SelectionKey.OP_READ);
-                    } else if (key.isReadable()){
+                    } else if (key.isReadable()) {
                         SocketChannel channel = (SocketChannel) key.channel();
                         read(channel);
                     }
@@ -66,8 +71,8 @@ public class NIOServer {
 
     }
 
-    public void read(SocketChannel channel){
-        if (channel == null){
+    public void read(SocketChannel channel) {
+        if (channel == null) {
             return;
         }
         ByteBuffer buffer = ByteBuffer.allocate(1024);
@@ -75,11 +80,14 @@ public class NIOServer {
             TimeUnit.SECONDS.sleep(2L);
             channel.read(buffer);
             System.out.println("服务器全部读取完毕");
-            byte[] array = buffer.array();
-            System.out.println("服务器端接收到的数据：" + new String(array, "UTF-8"));
-
 
             buffer.flip(); //读模式转为写模式
+            
+            byte[] array = buffer.array();
+            System.out.println("服务器端接收到的数据：" + new String(array, "UTF-8"));
+            buffer.clear();
+
+            //
             buffer = ByteBuffer.wrap("我是服务器，接收的数据传给你".getBytes());
             channel.write(buffer);
             buffer.clear();

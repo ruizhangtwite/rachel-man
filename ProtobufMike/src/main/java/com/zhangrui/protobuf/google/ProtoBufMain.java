@@ -4,6 +4,7 @@ import com.zhangrui.protobuf.AddressBooks;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 
 /**
@@ -33,6 +34,10 @@ public class ProtoBufMain {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         person.writeTo(outputStream);
         System.out.println(Arrays.toString(outputStream.toByteArray()));
+        
+        String str = "testing";
+        byte[] bytes = str.getBytes(Charset.forName("utf-8"));
+        System.out.println(Arrays.toString(bytes));
 
 
     }

@@ -2,8 +2,9 @@ package com.zhangrui.threadpool;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Desp:自定义线程池
@@ -21,7 +22,7 @@ public class CustomThreadExecutorImprove {
     private AtomicInteger atomCoreSize = new AtomicInteger(0);
     private AtomicInteger atomMaxSize = new AtomicInteger(0);
 
-    public MyThreadPoolExecutor(int coreSize, int workQueueSize, int maxSize) {
+    public CustomThreadExecutorImprove(int coreSize, int workQueueSize, int maxSize) {
         this.coreSize = coreSize;
         this.maxSize = maxSize;
 
@@ -65,7 +66,7 @@ public class CustomThreadExecutorImprove {
     }
 
     public static void main(String[] args) {
-        MyThreadPoolExecutor exector = new MyThreadPoolExecutor(3, 100, 6);
+        CustomThreadExecutorImprove exector = new CustomThreadExecutorImprove(3, 100, 6);
         for (int i = 0; i < 500; i++) {
             int k = i;
             exector.execute(() -> {
@@ -83,10 +84,10 @@ public class CustomThreadExecutorImprove {
 
     static class Worker extends Thread {
 
-        private MyThreadPoolExecutor exector;
+        private CustomThreadExecutorImprove exector;
         private boolean core;
 
-        public Worker(MyThreadPoolExecutor exector, boolean core) {
+        public Worker(CustomThreadExecutorImprove exector, boolean core) {
             this.exector = exector;
             this.core = core;
         }

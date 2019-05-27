@@ -15,8 +15,8 @@ public class BubbleSort<T extends Comparable<T>> implements Sort<T> {
     @Override
     public void sort(T[] values) {
         int size = values.length;
-        for (int i = 0; i < size; i++){
-            for (int j = 0; j < size - 1; j++){
+        for (int i = 0; i < size - 1; i++){
+            for (int j = 0; j < size - 1 - i; j++){
                 if (values[j].compareTo(values[j + 1]) > 0){
                     T temp = values[j + 1];
                     values[j + 1] = values[j];

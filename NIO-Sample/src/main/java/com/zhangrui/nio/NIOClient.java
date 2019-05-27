@@ -32,10 +32,11 @@ public class NIOClient {
     }
 
     public void listen() {
-        while (true){
+        while (true) {
 
             try {
-                this.selector.select();
+                int i = this.selector.select();
+                if (i <= 0) continue;
                 Set<SelectionKey> keySet = this.selector.selectedKeys();
                 Iterator<SelectionKey> iterator = keySet.iterator();
                 while (iterator.hasNext()) {
@@ -54,7 +55,7 @@ public class NIOClient {
                         channel.write(ByteBuffer.wrap(new String("向服务端发送了一条信息").getBytes()));
 
                         channel.register(selector, SelectionKey.OP_READ);
-                    } else if (key.isReadable()){
+                    } else if (key.isReadable()) {
                         SocketChannel channel = (SocketChannel) key.channel();
                         read(channel);
                     }
@@ -68,7 +69,7 @@ public class NIOClient {
 
     private void read(SocketChannel channel) {
 
-        if (channel == null){
+        if (channel == null) {
             return;
         }
 
@@ -77,11 +78,14 @@ public class NIOClient {
             TimeUnit.SECONDS.sleep(2L);
             channel.read(buffer);
             System.out.println("客户端全部读取完毕");
+            
+            buffer.flip(); //写模式转为读模式
+            
             byte[] array = buffer.array();
             System.out.println("客户端端接收到的数据：" + new String(array, "UTF-8"));
+            buffer.clear();
 
-
-            buffer.flip(); //读模式转为写模式
+            
             buffer = ByteBuffer.wrap("我是客户端，接收的数据传给你".getBytes());
             channel.write(buffer);
             buffer.clear();
