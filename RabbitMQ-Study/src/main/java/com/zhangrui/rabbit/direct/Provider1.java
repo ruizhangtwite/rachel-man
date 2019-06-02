@@ -37,15 +37,17 @@ public class Provider1 {
             }
         });
 
+        channel.confirmSelect();
         for (String routeKey : routeKeys) {
             channel.queueDeclare(routeKey + "-" + QUEUE_NAME, false, false, false, null);
             channel.queueBind(routeKey + "-" + QUEUE_NAME, "my-exchange-1", routeKey);
             channel.basicPublish("my-exchange-1", routeKey, null, ("我是" + routeKey + "级别").getBytes());
-            channel.confirmSelect();
         }
 
         System.out.println("消息已经发送");
         
+        
+        Thread.sleep(3000);
         channel.clearConfirmListeners();
         channel.close();
         connection.close();
