@@ -12,7 +12,7 @@ import com.rabbitmq.client.ConnectionFactory;
 public class TranactionProvider {
 
     public static void main(String[] args) throws Exception {
-        ConnectionFactory connectionFactory = new ConnectionFactory();
+        ConnectionFactory connectionFactory = new ConnectionFactory(); 
         connectionFactory.setHost("localhost");
         connectionFactory.setUsername("guest");
         connectionFactory.setPassword("guest");
