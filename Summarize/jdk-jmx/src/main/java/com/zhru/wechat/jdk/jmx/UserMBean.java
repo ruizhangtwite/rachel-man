@@ -1,6 +1,7 @@
 package com.zhru.wechat.jdk.jmx;
 
 /**
+ * 定义的MBean
  * @Author zhru
  * @Date 2019-10-29
  **/
