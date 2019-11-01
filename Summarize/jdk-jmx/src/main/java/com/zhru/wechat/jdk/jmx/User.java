@@ -3,12 +3,17 @@ package com.zhru.wechat.jdk.jmx;
 import javax.management.AttributeChangeNotification;
 import javax.management.Notification;
 import javax.management.NotificationBroadcasterSupport;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * UserMBean接口实现
+ *
  * @Author zhru
- * @Date 2019-10-29
- **/
+ * @Date 2019-10-30
+ */
 public class User extends NotificationBroadcasterSupport implements UserMBean {
+    
+    private AtomicInteger seq = new AtomicInteger();
 
     private String name;
 
@@ -22,9 +27,15 @@ public class User extends NotificationBroadcasterSupport implements UserMBean {
         String oldName = this.name;
         this.name = name;
 
-        Notification notification = new AttributeChangeNotification(this,
-                1, System.currentTimeMillis(), String.format("从%s, 更新到%s", oldName, name),
-                "name", name.getClass().getName(), oldName, name);
+        Notification notification = new AttributeChangeNotification(
+                this,
+                seq.getAndIncrement(), 
+                System.currentTimeMillis(), 
+                String.format("User的[name]属性从%s, 更新到%s", oldName, name),
+                "name", 
+                name.getClass().getName(), 
+                oldName,
+                name);
 
         sendNotification(notification);
     }

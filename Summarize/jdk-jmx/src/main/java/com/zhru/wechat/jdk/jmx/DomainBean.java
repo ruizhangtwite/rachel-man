@@ -9,18 +9,18 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
+ * DynamicMBean
  * @Author zhru
- * @Date 2019-10-29
+ * @Date 2019-10-30
  **/
 
 public class DomainBean implements DynamicMBean {
-
-    private MBeanInfo mBeanInfo = null;
-
+    //属性Name
     private String name;
+    //属性Age
     private int age;
 
-
+    
     public int getAge() {
         return age;
     }
@@ -42,7 +42,14 @@ public class DomainBean implements DynamicMBean {
         return x + y;
     }
 
-
+    /**
+     * 获取属性值
+     * @param attribute
+     * @return
+     * @throws AttributeNotFoundException
+     * @throws MBeanException
+     * @throws ReflectionException
+     */
     @Override
     public Object getAttribute(String attribute) throws AttributeNotFoundException, MBeanException, ReflectionException {
         if (attribute == null) {
@@ -57,6 +64,14 @@ public class DomainBean implements DynamicMBean {
         return null;
     }
 
+    /**
+     * 设置属性值
+     * @param attribute 
+     * @throws AttributeNotFoundException
+     * @throws InvalidAttributeValueException
+     * @throws MBeanException
+     * @throws ReflectionException
+     */
     @Override
     public void setAttribute(Attribute attribute) throws AttributeNotFoundException, InvalidAttributeValueException, MBeanException, ReflectionException {
         if (attribute == null) {
@@ -70,6 +85,11 @@ public class DomainBean implements DynamicMBean {
         }
     }
 
+    /**
+     * 获取Attribute集合
+     * @param attributes
+     * @return
+     */
     @Override
     public AttributeList getAttributes(String[] attributes) {
 
@@ -79,7 +99,7 @@ public class DomainBean implements DynamicMBean {
                 Object o = getAttribute(attribute);
                 bute = new Attribute(attribute, o);
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException("getAttributes()方法异常:" + e);
             }
 
             return bute;
@@ -88,6 +108,11 @@ public class DomainBean implements DynamicMBean {
         return new AttributeList(collect);
     }
 
+    /**
+     * 批量设置属性
+     * @param attributes
+     * @return
+     */
     @Override
     public AttributeList setAttributes(AttributeList attributes) {
         List<Attribute> collect = attributes.asList().stream().map(attribute -> {
@@ -95,20 +120,34 @@ public class DomainBean implements DynamicMBean {
                 setAttribute(attribute);
                 return attribute;
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException("setAttributes()方法异常:" + e);
             }
-            return null;
         }).collect(Collectors.toList());
         return new AttributeList(collect);
     }
 
+    /**
+     * 设置属性时调用的方法
+     * @param actionName 方法名
+     * @param params 方法参数
+     * @param signature 签名数组
+     * @return
+     * @throws MBeanException
+     * @throws ReflectionException
+     */
     @Override
     public Object invoke(String actionName, Object[] params, String[] signature) throws MBeanException, ReflectionException {
         return invokeMethod(actionName, params);
     }
 
+    /**
+     * MBeanInfo信息，MBeanInfo中的信息会被暴露到MBeanServer中
+     * 包括属性，操作等
+     * @return
+     */
     @Override
     public MBeanInfo getMBeanInfo() {
+        MBeanInfo mBeanInfo = null;
         try {
             mBeanInfo = new MBeanInfo(DomainBean.class.getName(), "MbeanInfo形式",
                     new MBeanAttributeInfo[]{
@@ -127,11 +166,17 @@ public class DomainBean implements DynamicMBean {
 
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("getMBeanInfo()方法异常:" + e);
         }
         return mBeanInfo;
     }
 
+    /**
+     * 公共方法
+     * @param actionName 方法名
+     * @param params 方法参数
+     * @return
+     */
     private Object invokeMethod(String actionName, Object[] params) {
         AtomicReference<Object> obj = new AtomicReference<>();
         Method[] methods = this.getClass().getMethods();
