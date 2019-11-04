@@ -13,6 +13,7 @@
         <module>jdk-international-resolve</module>
         <module>jdk-jmx</module>
         <module>jdk-beaninfo</module>
+        <module>jdk-compile</module>
     </modules>
     
     <packaging>pom</packaging>
