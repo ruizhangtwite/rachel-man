@@ -7,18 +7,25 @@ import java.io.File;
 import java.net.URI;
 
 /**
+ * 测试用例
+ *
  * @Author zhru
  * @Date 2019-11-04
  **/
 public class CustomCompilerTest {
 
-    public static void main(String[] args) throws Exception{
-        String sourceDirectory = System.getProperty("user.dir") + File.separator + "src/main/java";
-        URI uri = Thread.currentThread().getContextClassLoader().getResource(".").toURI();
+    public static void main(String[] args) throws Exception {
+        String outDirectory = Thread.currentThread().getContextClassLoader()
+                .getResource(".").toURI().getPath();
+        String userDir = System.getProperty("user.dir");
+        String s = outDirectory.substring(userDir.length());
+        String sourceDirectory = userDir
+                + s.substring(0, s.indexOf("/", 1))
+                + "/src/main/java";
 
-        CustomCompiler customCompiler = new CustomCompiler(sourceDirectory, uri.getPath());
+        CustomCompiler customCompiler = new CustomCompiler(sourceDirectory, outDirectory);
         boolean result = customCompiler.compile(DefaultCrudRespository.class.getName(), "java");
-        if (result){
+        if (result) {
             System.out.println("编译ok");
         }
 
