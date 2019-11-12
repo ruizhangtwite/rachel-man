@@ -8,7 +8,7 @@ import java.lang.management.ManagementFactory;
 /**
  * Desp: ModelMBean Agent
  * 2019-10-31 12:26
- * Created by zhangrui.
+ * Created by zhru.
  */
 public class JMXModelAgent {
 
