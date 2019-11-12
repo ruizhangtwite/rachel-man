@@ -12,6 +12,7 @@
         <module>jdk-international-study</module>
         <module>jdk-international-resolve</module>
         <module>jdk-jmx</module>
+        <module>jdk-delay</module>
     </modules>
     
     <packaging>pom</packaging>
