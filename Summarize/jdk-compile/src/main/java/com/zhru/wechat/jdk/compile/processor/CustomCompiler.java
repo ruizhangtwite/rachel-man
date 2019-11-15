@@ -50,7 +50,7 @@ public class CustomCompiler {
         Iterable<? extends JavaFileObject> files = this.standardFileManager
                 .getJavaFileObjectsFromFiles(Collections.singletonList(new File(path)));
 
-        //　设置文件编译时的options
+        //　设置文件编译时的options,指定输出目录，类似javac -d
         this.standardFileManager.setLocation(StandardLocation.CLASS_OUTPUT,
                 Arrays.asList(new File(outDirectory)));
 

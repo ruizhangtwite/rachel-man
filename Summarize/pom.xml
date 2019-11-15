@@ -12,12 +12,9 @@
         <module>jdk-international-study</module>
         <module>jdk-international-resolve</module>
         <module>jdk-jmx</module>
-<<<<<<< HEAD
         <module>jdk-delay</module>
-=======
         <module>jdk-beaninfo</module>
         <module>jdk-compile</module>
->>>>>>> 8b49416b2b26d71ca09fbbc3d7bf0cde70ba3bb6
     </modules>
     
     <packaging>pom</packaging>
