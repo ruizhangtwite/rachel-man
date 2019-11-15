@@ -13,10 +13,7 @@ import java.io.Serializable;
  **/
 
 @Respository
-public class DefaultCrudRespository implements CrudRespository<Person>, Serializable {
+public class DefaultCrudRespository implements
+        CrudRespository<Person>, Serializable {
 
-    @Override
-    public boolean create(Person user) {
-        return false;
-    }
 }

@@ -3,11 +3,11 @@ package com.zhru.wechat.jdk.compile.processor;
 
 import com.sun.tools.javac.processing.PrintingProcessor;
 
+import javax.annotation.processing.Processor;
 import javax.tools.*;
 import java.io.File;
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * 自定义编译器{@link JavaCompiler}
@@ -20,6 +20,12 @@ public class CustomCompiler {
     private final String sourceDirectory;
     // 编译文件输出目录
     private final String outDirectory;
+    // 编译Processor
+    private final List<Processor> processors;
+    // 编译监听器
+    private DiagnosticListener<? super JavaFileObject> diagnosticListener;
+    // 编译Options
+    private final Iterable<String> options;
 
     //　编译器
     private JavaCompiler compiler;
@@ -29,7 +35,11 @@ public class CustomCompiler {
     public CustomCompiler(String sourceDirectory, String outDirectory) {
         this.sourceDirectory = sourceDirectory;
         this.outDirectory = outDirectory;
+        this.processors = new LinkedList<>();
+        this.options = new LinkedList<>();
+        // 1.创建编译器
         this.compiler = ToolProvider.getSystemJavaCompiler();
+        // 2.创建FileManager
         this.standardFileManager = this.compiler
                 .getStandardFileManager(null, null, null);
     }
@@ -46,20 +56,47 @@ public class CustomCompiler {
                 + File.separator
                 + name.replaceAll("\\.", File.separator)
                 + "." + extendName;
-        // 封装成文件集合
-        Iterable<? extends JavaFileObject> files = this.standardFileManager
-                .getJavaFileObjectsFromFiles(Collections.singletonList(new File(path)));
 
-        //　设置文件编译时的options,指定输出目录，类似javac -d
+        // 3.设置文件编译时的options,指定输出目录，类似javac -d
         this.standardFileManager.setLocation(StandardLocation.CLASS_OUTPUT,
                 Arrays.asList(new File(outDirectory)));
 
-        // 初始化编译
-        JavaCompiler.CompilationTask compilationTask = this.compiler.getTask(new PrintWriter(System.out), this.standardFileManager,
-                null, null, null, files);
-        // 设置编译的过程
-        compilationTask.setProcessors(Arrays.asList(new CustomProcessor(), new PrintingProcessor()));
-        // 执行编译
+        // 4.封装成文件集合
+        Iterable<? extends JavaFileObject> files = this.standardFileManager
+                .getJavaFileObjectsFromFiles(Collections.singletonList(new File(path)));
+
+
+        // 5.初始化JavaCompiler.CompilationTask
+        JavaCompiler.CompilationTask compilationTask = this.compiler.getTask(
+                new PrintWriter(System.out),
+                this.standardFileManager,
+                this.diagnosticListener,
+                this.options,
+                null,
+                files);
+        // 6.设置编译的过程
+        compilationTask.setProcessors(this.processors);
+        // 7.执行编译
         return compilationTask.call();
+    }
+
+    /**
+     * 设置{@link Processor}
+     * @param processor
+     */
+    public void addProcessor(Processor processor) {
+
+        if (processor != null) {
+            this.processors.add(processor);
+        }
+
+    }
+
+    /**
+     * 设置编译诊断监听器
+     * @param diagnosticListener
+     */
+    public void setDiagnosticListener(DiagnosticListener<? super JavaFileObject> diagnosticListener) {
+        this.diagnosticListener = diagnosticListener;
     }
 }

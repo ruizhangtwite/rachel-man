@@ -6,5 +6,4 @@ package com.zhru.wechat.jdk.compile.processor;
  **/
 public interface CrudRespository<T> {
 
-    boolean create(T t);
 }

@@ -1,6 +1,7 @@
 package com.zhru.wechat.jdk.compile;
 
 import com.zhru.wechat.jdk.compile.processor.CustomCompiler;
+import com.zhru.wechat.jdk.compile.processor.CustomProcessor;
 import com.zhru.wechat.jdk.compile.processor.DefaultCrudRespository;
 import com.zhru.wechat.jdk.compile.processor.bean.Person;
 
@@ -25,7 +26,8 @@ public class CustomCompilerTest {
                 + "/src/main/java";
 
         CustomCompiler customCompiler = new CustomCompiler(sourceDirectory, outDirectory);
-        boolean result = customCompiler.compile(Person.class.getName(), "java");
+        customCompiler.addProcessor(new CustomProcessor());
+        boolean result = customCompiler.compile(DefaultCrudRespository.class.getName(), "java");
         if (result) {
             System.out.println("编译ok");
         }
