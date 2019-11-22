@@ -15,6 +15,7 @@
         <module>jdk-delay</module>
         <module>jdk-beaninfo</module>
         <module>jdk-compile</module>
+        <module>jdk-string-vs-stringbuilder</module>
     </modules>
     
     <packaging>pom</packaging>

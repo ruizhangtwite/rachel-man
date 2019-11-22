@@ -15,8 +15,9 @@
     <dependencies>
         <dependency>
             <groupId>com.zhru.wechat</groupId>
-            <artifactId>jdk.resourcebundle.provider.extend</artifactId>
+            <artifactId>jdk.international.reslove</artifactId>
             <version>1.0</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

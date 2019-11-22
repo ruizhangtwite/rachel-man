@@ -1,6 +1,7 @@
 package com.zhru.wechat.jdk.international;
 
-import com.zhru.wechat.jdk.extend.control.CustomControl;
+
+import com.zhru.wechat.jdk.international.reslove.control.CustomControl;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
