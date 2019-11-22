@@ -17,6 +17,11 @@ public class StringBuilderConcat {
         System.out.printf(" %s 次运算耗时 %s 毫秒", num, endTime - startTime);
     }
 
+    /**
+     * 拼接字符串(+)
+     * @param num 拼接次数
+     * @return　拼接后的字符串
+     */
     private static String statement(int num) {
         StringBuilder result = new StringBuilder();
         if (num <= 0) {
